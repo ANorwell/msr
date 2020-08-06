@@ -13,7 +13,7 @@ parallelism_config = 10
 @click.group()
 @click.option("-p", "--parallelism", default=10, type=int, show_default=True)
 def cli(parallelism):
-    """A tool formeasuring URL response time."""
+    """A tool for measuring URL response time."""
     global parallelism_config
     parallelism_config = parallelism
     pass
