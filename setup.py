@@ -7,14 +7,14 @@ from msr.version import library_version
 # Package meta-data.
 NAME = 'msr'
 DESCRIPTION = '.'
-URL = 'https://github.com/me/myproject'
+URL = 'https://github.com/anorwell'
 EMAIL = 'anorwell@gmail.com'
 AUTHOR = 'Arron Norwell'
 REQUIRES_PYTHON = '>=3.7.0'
 VERSION = library_version()
 
 # Required packages
-REQUIRED = ['click', 'colorama']
+REQUIRED = ['click', 'colorama', 'requests']
 
 # Optional packages
 EXTRAS = {}
