@@ -20,7 +20,7 @@ def cli(parallelism):
 
 @cli.command()
 def version():
-    """Displays the version of the program."""
+    """Displays the version of the program"""
     click.echo(library_version())
 
 @cli.command()
@@ -32,23 +32,24 @@ def register(url):
 
 @cli.command()
 def list():
-    click.echo("All registered URLs:")
+    """Lists all registered URLs"""
+    click.secho("All registered URLs:", fg="blue", bold="True")
     for url in registry.list():
         click.echo(url)
 
 @cli.command()
 def measure():
-    """Displays the size of each registered URL."""
+    """Displays the size of each registered URL"""
     table(Measurement(parallelism_config).response_size(registry.list()))
 
 @cli.command()
 def response_times():
-    """Displays the response time of each registered URL."""
+    """Displays the response time of each registered URL"""
     table(Measurement(parallelism_config).response_time(registry.list()))
 
 @cli.command()
 def race():
-    """Displays the average response time by domain."""
+    """Displays the average response time by domain"""
     click.secho("Racing...", fg="blue", bold=True)
     table(Measurement(parallelism_config).average_response_time(registry.list()))
 

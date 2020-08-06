@@ -19,11 +19,16 @@ class Measurement:
 
   def average_response_time(self, urls):
     """Returns (domain, average response time) pairs as a generator"""
-    by_domain = itertools.groupby(self.response_time(urls), lambda pair: urlparse(pair[0]).hostname)
-    response_times_pairs = [(domain, [v for (k, v) in pairs]) for domain, pairs in by_domain]
+    by_domain = {}
+    for url, response in self.response_time(urls):
+      domain = ".".join(urlparse(url).netloc.split(".")[-2:])
+      if domain not in by_domain:
+        by_domain[domain] = []
+      by_domain[domain].append(response)
+
     return (
       (domain, sum(response_times, datetime.timedelta())/len(response_times))
-      for (domain, response_times) in response_times_pairs
+      for (domain, response_times) in by_domain.items()
     )
 
   def __async(self, urls, operation):
