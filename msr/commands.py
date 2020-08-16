@@ -10,6 +10,7 @@ registry = Registry.create(base_dir)
 
 parallelism_config = 10
 
+
 @click.group()
 @click.option("-p", "--parallelism", default=10, type=int, show_default=True)
 def cli(parallelism):
@@ -18,10 +19,12 @@ def cli(parallelism):
     parallelism_config = parallelism
     pass
 
+
 @cli.command()
 def version():
     """Displays the version of the program"""
     click.echo(library_version())
+
 
 @cli.command()
 @click.argument('url')
@@ -30,6 +33,7 @@ def register(url):
     click.secho(f"Registering {url}", fg="blue")
     registry.register(url)
 
+
 @cli.command()
 def list():
     """Lists all registered URLs"""
@@ -37,21 +41,26 @@ def list():
     for url in registry.list():
         click.echo(url)
 
+
 @cli.command()
 def measure():
     """Displays the size of each registered URL"""
     table(Measurement(parallelism_config).response_size(registry.list()))
+
 
 @cli.command()
 def response_times():
     """Displays the response time of each registered URL"""
     table(Measurement(parallelism_config).response_time(registry.list()))
 
+
 @cli.command()
 def race():
     """Displays the average response time by domain"""
     click.secho("Racing...", fg="blue", bold=True)
-    table(Measurement(parallelism_config).average_response_time(registry.list()))
+    table(
+        Measurement(parallelism_config).average_response_time(registry.list()))
+
 
 def table(column_pairs):
     for (name, value) in column_pairs:

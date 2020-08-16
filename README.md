@@ -29,7 +29,7 @@ Commands:
   register        Registers the provided URL
   response-times  Displays the response time of each registered URL.
   version         Displays the version of the program.
-  ```
+```
 
   ## Development
 
