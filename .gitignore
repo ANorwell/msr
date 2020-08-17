@@ -1,3 +1,4 @@
 msr.egg-info/
 Pipfile*
 .vscode/
+msr/__pycache__/

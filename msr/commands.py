@@ -1,6 +1,8 @@
 import click
 import os
 
+from msr.crawler import Crawler
+from msr.crawl_cache import CrawlCache
 from msr.registry import Registry
 from msr.measurement import Measurement
 from msr.version import library_version
@@ -35,11 +37,31 @@ def register(url):
 
 
 @cli.command()
+@click.argument('url')
+def crawl_url(url):
+    """Crawl the provided URL"""
+    click.secho(f"Crawling {url}", fg="blue")
+    crawl_cache = CrawlCache.create(base_dir)
+    for child_link in Crawler(crawl_cache).crawl(url):
+        click.echo(child_link)
+
+
+@cli.command()
 def list():
     """Lists all registered URLs"""
     click.secho("All registered URLs:", fg="blue", bold="True")
     for url in registry.list():
         click.echo(url)
+
+
+@cli.command()
+@click.argument('url')
+def test_cache(url):
+    click.secho(f"Caching {url}", fg="blue")
+    cache = CrawlCache.create(base_dir)
+    cache.create(base_dir).add_link(url, ["https://a.com"], -1)
+    for child_link in cache.cachedChildren(url):
+        click.echo(child_link)
 
 
 @cli.command()
